@@ -5,7 +5,10 @@ const Product = require('../models/Product');
 const getAll = catchError(async (req, res) => {
     const {id} = req.user
     const cart = await Cart.findAll({
-        include: [Product],
+        include: [{
+            model: Product,
+            include: [Image]
+        }],
         where: {userId: id}
     });
     return res.json(cart);
