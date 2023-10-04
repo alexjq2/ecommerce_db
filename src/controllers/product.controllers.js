@@ -14,7 +14,7 @@ const create = catchError(async (req, res) => {
 
 const getOne = catchError(async (req, res) => {
     const { id } = req.params;
-    const product = await Product.findByPk(id);
+    const product = await Product.findByPk(id , {include: [Image]});
     return res.json(product);
 });
 
