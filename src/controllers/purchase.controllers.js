@@ -6,9 +6,9 @@ const Product = require('../models/Product');
 
 
 const getAll = catchError(async (req, res) => {
-    const {id} = req.user
+    const userId = req.user.id
     const purchase = await Purchase.findAll({
-        where: {userId: id},
+        where: {userId: userId},
         include: [{
             model: Product,
             include: [Image]
@@ -18,14 +18,14 @@ const getAll = catchError(async (req, res) => {
 });
 
 const create = catchError(async (req, res) => {
-    const {id} = req.user;
+    const userId = req.user.id
     const carts = await Cart.findAll({
-        where: {id},
+        where: {userId},
         attributes: ['userId', 'productId', 'quantity'],
         raw: true
     });
     const purchase = await Purchase.bulkCreate(carts);
-    await Cart.destroy({where: {id}});
+    await Cart.destroy({where: {userId}});
     return res.status(201).json(purchase);
 });
 
