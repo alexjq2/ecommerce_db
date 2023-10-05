@@ -1,9 +1,14 @@
 const catchError = require('../utils/catchError');
 const Product = require('../models/Product');
 const Image = require('../models/Image')
+const {Op} = require('sequelize')
 
 const getAll = catchError(async (req, res) => {
-    const product = await Product.findAll({include: [Image]});
+    const {title} = req.query;
+    const product = await Product.findAll(
+        {include: [Image],
+        where: {title: { [Op.ilike]: `%${title}%`}}
+        });
     return res.json(product);
 });
 
