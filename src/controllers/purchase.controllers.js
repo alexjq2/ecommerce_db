@@ -2,6 +2,8 @@ const catchError = require('../utils/catchError');
 const Purchase = require('../models/Purchase');
 const Cart = require('../models/Cart');
 const Image = require('../models/Image');
+const Product = require('../models/Product');
+
 
 const getAll = catchError(async (req, res) => {
     const {id} = req.user
