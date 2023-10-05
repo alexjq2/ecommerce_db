@@ -34,7 +34,7 @@ const remove = catchError(async (req, res) => {
 
 const update = catchError(async (req, res) => {
     const { id } = req.params;
-    const {quantity} = re.body;
+    const {quantity} = req.body;
     const cart = await Cart.update({
         quantity
     }, 
