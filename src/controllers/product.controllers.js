@@ -5,11 +5,12 @@ const {Op} = require('sequelize')
 
 const getAll = catchError(async (req, res) => {
     const {title, categoryId} = req.query;
+    const where = {};
+    if (title) where.title = { [Op.iLike]: `%${title}%`};
+    if (categoryId) where.categoryId = categoryId;
     const product = await Product.findAll(
         {include: [Image],
-        where: {title: { [Op.ilike]: `%${title}%`},
-        categoryId
-    }
+        where
         });
     return res.json(product);
 });
